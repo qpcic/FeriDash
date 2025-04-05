@@ -201,8 +201,8 @@ Transform:
   m_GameObject: {fileID: 28684095}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 727, y: 11.8213, z: 0}
-  m_LocalScale: {x: 1812.4908, y: 38.324455, z: 1}
+  m_LocalPosition: {x: 647.3491, y: 8.8344, z: 0}
+  m_LocalScale: {x: 2067.5244, y: 44.30068, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -469,7 +469,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 265
+  orthographic size: 400
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -494,7 +494,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 649, y: 264, z: -10}
+  m_LocalPosition: {x: 649, y: 402, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -741,7 +741,7 @@ Transform:
   m_GameObject: {fileID: 1407800804}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 98, y: 96, z: 0}
+  m_LocalPosition: {x: -206, y: 96, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -761,7 +761,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpVelocity: 1800
-  moveSpeed: 500
+  moveSpeed: 666
   groundCheck: {fileID: 78676570}
   groundCheckRadius: 0.2
   groundLayer:
@@ -997,7 +997,7 @@ Transform:
   m_GameObject: {fileID: 1752169369}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1287, y: 227.54782, z: 0}
+  m_LocalPosition: {x: 1616, y: 227.54782, z: 0}
   m_LocalScale: {x: 5.6999965, y: 843.4541, z: 16.888878}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1013,7 +1013,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1751960522326542837, guid: e89413888c5d9124c8d376dfb2e47768, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 593
+      value: 908
       objectReference: {fileID: 0}
     - target: {fileID: 1751960522326542837, guid: e89413888c5d9124c8d376dfb2e47768, type: 3}
       propertyPath: m_LocalPosition.y
