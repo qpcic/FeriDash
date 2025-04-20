@@ -2,10 +2,11 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float jumpVelocity = 150f;
-    public float moveSpeed = 5f; // You can tweak this in Inspector
+    private float jumpVelocity = 1600;
+    private float moveSpeed = 666f; // You can tweak this in Inspector
+    private float camSpeed = 615;
     public Transform groundCheck;
-    public float groundCheckRadius = 0.2f;
+    private float groundCheckRadius = 0.2f;
     public LayerMask groundLayer;
     public float jumpBufferTime = 0.15f; // in seconds
 
@@ -46,15 +47,18 @@ public class PlayerController : MonoBehaviour
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0);
         }
-        
+
         // Auto-move to the right
         rb.linearVelocity = new Vector2(moveSpeed, rb.linearVelocity.y);
 
         if (isGrounded && jumpBufferCounter > 0f)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpVelocity);
-            jumpBufferCounter = 0f; // reset buffer after jump
+            jumpBufferCounter = 0f;
         }
+
+        // ✅ Camera moves at the same speed as the player (not tied to position)
+        Camera.main.transform.position += new Vector3(camSpeed * Time.fixedDeltaTime, 0f, 0f);
     }
 
     void OnTriggerEnter2D(Collider2D other)
