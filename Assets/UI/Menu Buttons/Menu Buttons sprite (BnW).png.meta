@@ -180,6 +180,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -834,7 +847,36 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Menu Buttons sprite (BnW)_0: 6605399785169992778
+      Menu Buttons sprite (BnW)_1: -6590745277454641608
+      Menu Buttons sprite (BnW)_10: 1410391903817647788
+      Menu Buttons sprite (BnW)_11: -650886592192641895
+      Menu Buttons sprite (BnW)_12: 3889632725029467092
+      Menu Buttons sprite (BnW)_13: -2417640550058413672
+      Menu Buttons sprite (BnW)_14: 8209608196647051113
+      Menu Buttons sprite (BnW)_15: -7393627055462713908
+      Menu Buttons sprite (BnW)_16: -7950851768424210683
+      Menu Buttons sprite (BnW)_17: -2015987400146692217
+      Menu Buttons sprite (BnW)_18: 2461196404440779919
+      Menu Buttons sprite (BnW)_19: 2088770946028252184
+      Menu Buttons sprite (BnW)_2: 626070722081851790
+      Menu Buttons sprite (BnW)_20: 1286967997032707097
+      Menu Buttons sprite (BnW)_21: 1129694780807903648
+      Menu Buttons sprite (BnW)_22: -3263181131123679763
+      Menu Buttons sprite (BnW)_23: 5168338983920594523
+      Menu Buttons sprite (BnW)_24: -6234835024823999411
+      Menu Buttons sprite (BnW)_25: -299499951468511231
+      Menu Buttons sprite (BnW)_26: -9158224191459809893
+      Menu Buttons sprite (BnW)_27: 4159256260971155371
+      Menu Buttons sprite (BnW)_28: -7926048299761647931
+      Menu Buttons sprite (BnW)_3: -7400745310067718989
+      Menu Buttons sprite (BnW)_4: -2405842280117393066
+      Menu Buttons sprite (BnW)_5: -6827619388968304841
+      Menu Buttons sprite (BnW)_6: -1780571671099364792
+      Menu Buttons sprite (BnW)_7: 4902860978009340434
+      Menu Buttons sprite (BnW)_8: 7798664930083345572
+      Menu Buttons sprite (BnW)_9: 1721249783069647981
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

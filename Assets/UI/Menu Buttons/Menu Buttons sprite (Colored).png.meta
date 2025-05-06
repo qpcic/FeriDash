@@ -180,6 +180,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -834,7 +847,36 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Menu Buttons sprite (Colored)_0: -1089362598752424768
+      Menu Buttons sprite (Colored)_1: 3884067897123459035
+      Menu Buttons sprite (Colored)_10: 7132635218795455527
+      Menu Buttons sprite (Colored)_11: 5288627430167393240
+      Menu Buttons sprite (Colored)_12: -2657720538197452315
+      Menu Buttons sprite (Colored)_13: 3237465056078936797
+      Menu Buttons sprite (Colored)_14: 6546343388644441463
+      Menu Buttons sprite (Colored)_15: -5058477840222938399
+      Menu Buttons sprite (Colored)_16: -3623685220983805901
+      Menu Buttons sprite (Colored)_17: 5705389246921598358
+      Menu Buttons sprite (Colored)_18: 8448704267597685297
+      Menu Buttons sprite (Colored)_19: -7693406204254345636
+      Menu Buttons sprite (Colored)_2: 5421684004736924512
+      Menu Buttons sprite (Colored)_20: 652849551791619392
+      Menu Buttons sprite (Colored)_21: -7036191499568800480
+      Menu Buttons sprite (Colored)_22: -1982620720266789771
+      Menu Buttons sprite (Colored)_23: 8599549965125712760
+      Menu Buttons sprite (Colored)_24: -1217541886829312381
+      Menu Buttons sprite (Colored)_25: -2947347079800363970
+      Menu Buttons sprite (Colored)_26: 8866725381085454046
+      Menu Buttons sprite (Colored)_27: 1327399422770421939
+      Menu Buttons sprite (Colored)_28: 6478859106263673648
+      Menu Buttons sprite (Colored)_3: -4872112688529397356
+      Menu Buttons sprite (Colored)_4: 5201814516212819292
+      Menu Buttons sprite (Colored)_5: -4222692181525256047
+      Menu Buttons sprite (Colored)_6: -6954559746687996954
+      Menu Buttons sprite (Colored)_7: 8197310693581828768
+      Menu Buttons sprite (Colored)_8: 2444812430803609630
+      Menu Buttons sprite (Colored)_9: 5728256176999484007
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
