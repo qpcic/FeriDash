@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 
+
 public class PlayerController : MonoBehaviour
 {
     [Header("Attempts Counter")]
@@ -32,6 +33,9 @@ public class PlayerController : MonoBehaviour
     // For exact X movement
     private float startTime;
     private float initialX;
+
+    //level progress
+    public LevelProgress levelProgress;
 
     void Start()
     {
@@ -118,6 +122,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.CompareTag("LevelEndWall"))
         {
+            levelProgress.CompleteLevel();
             Debug.Log("YOU WON!");
             ReloadScene();
         }
