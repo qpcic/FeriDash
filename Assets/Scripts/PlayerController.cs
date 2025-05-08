@@ -3,6 +3,11 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Attempts Counter")]
+    int attempts = 1;
+    public TMP_Text attemptText;
+
+    
     [Header("Movement Settings")]
     public float moveSpeed = 666f;
     public float jumpVelocity = 1700f;
@@ -19,7 +24,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("UI")]
     public TMP_Text velocityText;
-
+    
     private Rigidbody2D rb;
     private bool isGrounded;
     private bool wasGroundedLastFrame = false;
@@ -33,6 +38,9 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
 
+        attempts = PlayerPrefs.GetInt("Attempts", 1);
+        attemptText.text = $"Attempts: {attempts}";
+        
         // Store initial time and position for X tracking
         initialX = transform.position.x;
         startTime = Time.time;
@@ -125,6 +133,8 @@ public class PlayerController : MonoBehaviour
 
     void Die()
     {
+        attempts++;
+        PlayerPrefs.SetInt("Attempts", attempts); // Save to PlayerPrefs
         Debug.Log("You Died!");
         ReloadScene();
     }
