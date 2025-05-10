@@ -18,6 +18,7 @@ public class LevelProgress : MonoBehaviour
     }
 
     // Update is called once per frame
+
     void Update()
     {
         if (levelComplete)
