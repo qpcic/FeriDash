@@ -54,7 +54,7 @@ public class MusicManager : MonoBehaviour
     private void PlayMusicBasedOnScene(string sceneName)
     {
         // Seznam imen menu scen
-        string[] menuScenes = { "MainMenu", "ProfileMenu", "LevelSelect", "SettingsMenu" };
+        string[] menuScenes = { "MainMenu", "ProfileMenu", "LevelSelect", "SettingsMenu"};
 
         // Preveri, ali je trenutna scena menu scena
         if (System.Array.Exists(menuScenes, menu => menu == sceneName))
@@ -76,12 +76,18 @@ public class MusicManager : MonoBehaviour
                     {
                         audioSource.clip = levelMusic.musicClip;
                         audioSource.Play();
+                    } else {
+                        audioSource.Play();
                     }
-                    return;
+                        return;
                 }
             }
 
-            if (audioSource.clip != menuMusic) // Privzeto uporabi menu glasbo, če ni najdenega ujemanja
+            if (sceneName == "LevelPause") {
+                audioSource.Stop();
+            }
+
+            if (sceneName == "MainMenu") // Privzeto uporabi menu glasbo, če ni najdenega ujemanja
             {
                 audioSource.clip = menuMusic;
                 audioSource.Play();
