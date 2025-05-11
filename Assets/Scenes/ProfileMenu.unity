@@ -1855,6 +1855,9 @@ MonoBehaviour:
   - {fileID: -1492268639463085351, guid: d46a3fcd2a0a72f40958e64bd91a1614, type: 3}
   - {fileID: 8222600411922846797, guid: 8a732a9d2bd98ad428ff86983adfdf4d, type: 3}
   targetRenderer: {fileID: 923145229}
+  text1: {fileID: 1823240110}
+  text2: {fileID: 1600296855}
+  text3: {fileID: 1535186613}
 --- !u!1 &1925262878
 GameObject:
   m_ObjectHideFlags: 0
