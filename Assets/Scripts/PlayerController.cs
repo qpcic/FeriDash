@@ -1,14 +1,13 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-
-public class PlayerController : MonoBehaviour
-{
+public class PlayerController : MonoBehaviour {
     [Header("Attempts Counter")]
     int attempts = 1;
     public TMP_Text attemptText;
 
-    
     [Header("Movement Settings")]
     public float moveSpeed = 666f;
     public float jumpVelocity = 1700f;
@@ -25,57 +24,53 @@ public class PlayerController : MonoBehaviour
 
     [Header("UI")]
     public TMP_Text velocityText;
-    
+
     private Rigidbody2D rb;
     private bool isGrounded;
     private bool wasGroundedLastFrame = false;
 
-    // For exact X movement
     private float startTime;
     private float initialX;
 
-    //level progress
     public LevelProgress levelProgress;
 
-    void Start()
-    {
+    private bool isPaused = false;
+
+    private int jumpCount = 0;
+
+    void Start() {
         rb = GetComponent<Rigidbody2D>();
         rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
 
         attempts = PlayerPrefs.GetInt("Attempts", 1);
         attemptText.text = $"Attempts: {attempts}";
-        
-        // Store initial time and position for X tracking
+
         initialX = transform.position.x;
+        Time.timeScale = 1f;
         startTime = Time.time;
     }
 
-    void Update()
-    {
-        // Handle jump buffer input
-        if (Input.GetMouseButtonDown(0))
-        {
+    void Update() {
+        if (Input.GetMouseButtonDown(0)) {
             jumpBufferCounter = jumpBufferTime;
+            jumpCount++;    
         }
 
         if (Input.GetMouseButton(0))
-        {
             jumpBufferCounter -= Time.deltaTime;
-        }
         else
-        {
             jumpBufferCounter = 0f;
-        }
+
+        if (Input.GetKeyDown(KeyCode.P))
+            TogglePause();
     }
 
-    void FixedUpdate()
-    {
-        // Ground detection
+    void FixedUpdate() {
+        if (isPaused) return;
+
         isGrounded = rb.IsTouchingLayers(groundLayer);
 
-        // On landing
-        if (isGrounded && !wasGroundedLastFrame)
-        {
+        if (isGrounded && !wasGroundedLastFrame) {
             float currentZ = transform.rotation.eulerAngles.z;
             float snappedZ = Mathf.Round(currentZ / 90f) * 90f;
             transform.rotation = Quaternion.Euler(0f, 0f, snappedZ);
@@ -83,33 +78,26 @@ public class PlayerController : MonoBehaviour
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
         }
 
-        // On leaving ground
-        if (!isGrounded && rb.freezeRotation)
-        {
+        if (!isGrounded && rb.freezeRotation) {
             rb.freezeRotation = false;
-            rb.AddTorque(10f, ForceMode2D.Impulse); // optional torque when leaving ground
+            rb.AddTorque(10f, ForceMode2D.Impulse);
         }
 
         wasGroundedLastFrame = isGrounded;
 
-        // Handle jump
-        if (isGrounded && Mathf.Abs(rb.linearVelocity.y) < 0.01f && jumpBufferCounter > 0f)
-        {
+        if (isGrounded && Mathf.Abs(rb.linearVelocity.y) < 0.01f && jumpBufferCounter > 0f) {
             rb.freezeRotation = false;
             rb.AddTorque(10f, ForceMode2D.Impulse);
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpVelocity);
             jumpBufferCounter = 0f;
         }
 
-        // Override X position to enforce exact horizontal movement
         Vector3 pos = transform.position;
         pos.x = initialX + moveSpeed * (Time.time - startTime);
         transform.position = pos;
 
-        // Move camera with player
         Camera.main.transform.position += new Vector3(camSpeed * Time.fixedDeltaTime, 0f, 0f);
 
-        // Debug UI text
         velocityText.text =
             $"Y Velocity: {rb.linearVelocity.y:F2}\n" +
             $"X Position: {transform.position.x:F2}\n" +
@@ -118,35 +106,56 @@ public class PlayerController : MonoBehaviour
             $"FreezeRotation: {rb.freezeRotation}";
     }
 
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("LevelEndWall"))
-        {
+    void OnTriggerEnter2D(Collider2D other) {
+        if (other.CompareTag("LevelEndWall")) {
             levelProgress.CompleteLevel();
             Debug.Log("YOU WON!");
-            ReloadScene();
+            TogglePause();
         }
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
-    {
+    void OnCollisionEnter2D(Collision2D collision) {
         if (collision.gameObject.CompareTag("Spike"))
-        {
             Die();
-        }
     }
 
-    void Die()
-    {
+    void Die() {
         attempts++;
-        PlayerPrefs.SetInt("Attempts", attempts); // Save to PlayerPrefs
+        PlayerPrefs.SetInt("Attempts", attempts);
         Debug.Log("You Died!");
         ReloadScene();
     }
 
-    void ReloadScene()
-    {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(
-            UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+    public void ReloadScene() {
+        if (isPaused) {
+            Time.timeScale = 1f;
+            SceneManager.UnloadSceneAsync("LevelPause");
+            isPaused = false;
+        }
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void TogglePause() {
+        if (!isPaused) {
+            Time.timeScale = 0f;
+            isPaused = true;
+            PlayerPrefs.SetFloat("Time", Time.time - startTime);
+            PlayerPrefs.SetInt("Jumps", jumpCount);
+            SceneManager.LoadScene("LevelPause", LoadSceneMode.Additive);
+            //Invoke(nameof(SetupPauseSceneUI), 0.1f); // wait a frame
+        } else {
+            isPaused = false;
+            SceneManager.UnloadSceneAsync("LevelPause");
+        }
+    }
+
+    public void OnRestartButtonClicked() {
+        ReloadScene();
+    }
+
+    public void OnMainMenuButtonClicked() {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("MainMenu");
     }
 }
