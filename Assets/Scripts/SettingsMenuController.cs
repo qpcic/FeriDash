@@ -10,6 +10,9 @@ public class SettingsMenuController : MonoBehaviour
     [SerializeField] private Toggle fpsToggle;
     [SerializeField] private GameObject fpsDisplay; // Assign the FPS counter UI Text or panel
 
+    [Header("Auto retry toggle")]
+    [SerializeField] private Toggle autoRetryToggle;
+
     private void Start()
     {
         if (fpsDisplay == null)
@@ -28,6 +31,12 @@ public class SettingsMenuController : MonoBehaviour
         if (FPSDisplay.Instance != null)
             FPSDisplay.Instance.SetVisible(showFPS);
         fpsToggle.onValueChanged.AddListener(OnFPSToggleChanged);
+
+        // Load and apply Auto Retry state
+        bool autoRetry = PlayerPrefs.GetInt("AutoRetry", 0) == 1;
+        autoRetryToggle.isOn = autoRetry;
+        autoRetryToggle.onValueChanged.AddListener(OnAutoRetryToggle);
+
     }
 
     private void OnVolumeChanged(float value)
@@ -51,5 +60,10 @@ public class SettingsMenuController : MonoBehaviour
     {
         volumeSlider.onValueChanged.RemoveListener(OnVolumeChanged);
         fpsToggle.onValueChanged.RemoveListener(OnFPSToggleChanged);
+    }
+
+    private void OnAutoRetryToggle(bool autoRetry) {
+        PlayerPrefs.SetInt("AutoRetry", autoRetry ? 1 : 0);
+        PlayerPrefs.Save();
     }
 }

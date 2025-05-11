@@ -123,7 +123,12 @@ public class PlayerController : MonoBehaviour {
         attempts++;
         PlayerPrefs.SetInt("Attempts", attempts);
         Debug.Log("You Died!");
-        ReloadScene();
+        int isAutoRetry = PlayerPrefs.GetInt("AutoRetry", 1);
+        if (isAutoRetry == 1) {
+            ReloadScene();
+        } else {
+            TogglePause();
+        }
     }
 
     public void ReloadScene() {
