@@ -32,6 +32,7 @@ public class LevelProgress : MonoBehaviour
         progressBar.value = Mathf.Clamp01(progress);
         int percent = Mathf.RoundToInt(progress * 100f);
         progressText.text = percent + "%";
+        PlayerPrefs.SetFloat("LevelProgress", progress);
     }
 
     public void CompleteLevel()
