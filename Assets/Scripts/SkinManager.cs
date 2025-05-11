@@ -48,5 +48,4 @@ public class SkinManager : MonoBehaviour
         PlayerPrefs.Save();
         Debug.Log("Saved selected skin: " + currentSkinIndex);
     }
-
 }
