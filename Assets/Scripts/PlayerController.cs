@@ -51,12 +51,12 @@ public class PlayerController : MonoBehaviour {
     }
 
     void Update() {
-        if (Input.GetMouseButtonDown(0)) {
+        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space)) {
             jumpBufferCounter = jumpBufferTime;
             jumpCount++;    
         }
 
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) || Input.GetKey(KeyCode.Space)) 
             jumpBufferCounter -= Time.deltaTime;
         else
             jumpBufferCounter = 0f;
