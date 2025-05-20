@@ -1,9 +1,9 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class ProfileMenu : MonoBehaviour
 {
-
     public void OpenMenu()
     {
         Debug.Log("Click Test");
