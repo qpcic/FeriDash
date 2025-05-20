@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -28,7 +29,7 @@ public class PlayerController : MonoBehaviour {
     private Rigidbody2D rb;
     private bool isGrounded;
     private bool wasGroundedLastFrame = false;
-
+    
     private float startTime;
     private float initialX;
 
@@ -137,7 +138,7 @@ public class PlayerController : MonoBehaviour {
             SceneManager.UnloadSceneAsync("LevelPause");
             isPaused = false;
         }
-
+        
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
