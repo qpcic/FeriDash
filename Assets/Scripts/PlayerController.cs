@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour {
     [Header("Attempts Counter")]
     int attempts = 1;
+
+    private int totalAttempts =  PlayerPrefs.GetInt("TotalAttempts");
     public TMP_Text attemptText;
 
     [Header("Movement Settings")]
@@ -124,6 +126,13 @@ public class PlayerController : MonoBehaviour {
         attempts++;
         PlayerPrefs.SetInt("Attempts", attempts);
         Debug.Log("You Died!");
+
+        int totAttempts = PlayerPrefs.GetInt("TotalAttempts", 0);
+        PlayerPrefs.SetInt("TotalAttempts", totAttempts + 1);
+
+        int jumps = PlayerPrefs.GetInt("TotalJumps", 0);
+        PlayerPrefs.SetInt("TotalJumps", jumps + jumpCount);
+        
         int isAutoRetry = PlayerPrefs.GetInt("AutoRetry", 1);
         if (isAutoRetry == 1) {
             ReloadScene();

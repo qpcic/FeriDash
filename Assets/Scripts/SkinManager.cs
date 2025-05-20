@@ -10,6 +10,9 @@ public class SkinManager : MonoBehaviour
     public TMP_Text text2;
     public TMP_Text text3;
     
+    public TMP_Text AttemptsText;
+    public TMP_Text JumpsText;
+    
     private const string SkinKey = "SelectedSkin";
     private int currentSkinIndex = 0;
 
@@ -17,6 +20,11 @@ public class SkinManager : MonoBehaviour
     {
         int savedSkinIndex = PlayerPrefs.GetInt(SkinKey, 0);
         SelectSkin(savedSkinIndex);
+        
+        int att = PlayerPrefs.GetInt("TotalAttempts", 0);
+        int jmp = PlayerPrefs.GetInt("TotalJumps");
+        AttemptsText.text = "Attempts: " + att;
+        JumpsText.text = "Jumps: " + jmp;
 
     }
 
