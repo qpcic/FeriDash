@@ -5,10 +5,19 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
+    
+    private bool isDead = false;
+
+    //[Header("Effects")]
+    //public GameObject deathExplosionPrefab;
+
     [Header("Attempts Counter")]
     int attempts = 1;
 
-    private int totalAttempts =  PlayerPrefs.GetInt("TotalAttempts");
+    [Header("Audio")]
+    public AudioSource deathAudioSource;
+
+    private int totalAttempts;
     public TMP_Text attemptText;
 
     [Header("Movement Settings")]
@@ -31,19 +40,19 @@ public class PlayerController : MonoBehaviour {
     private Rigidbody2D rb;
     private bool isGrounded;
     private bool wasGroundedLastFrame = false;
-    
+
     private float startTime;
     private float initialX;
 
     public LevelProgress levelProgress;
 
     private bool isPaused = false;
-
     private int jumpCount = 0;
 
     void Start() {
         rb = GetComponent<Rigidbody2D>();
         rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+        totalAttempts = PlayerPrefs.GetInt("TotalAttempts");
 
         attempts = PlayerPrefs.GetInt("Attempts", 1);
         attemptText.text = $"Attempts: {attempts}";
@@ -69,7 +78,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     void FixedUpdate() {
-        if (isPaused) return;
+        if (isPaused || isDead) return;
 
         isGrounded = rb.IsTouchingLayers(groundLayer);
 
@@ -123,6 +132,28 @@ public class PlayerController : MonoBehaviour {
     }
 
     void Die() {
+        if (deathAudioSource != null)
+            deathAudioSource.Play();
+
+        isDead = true;
+
+        // Zakomentiran efekt smrti:
+        /*
+        if (deathExplosionPrefab != null)
+        {
+            Vector3 spawnPosition = transform.position;
+            spawnPosition.z = 0; // ali -1, če kamera ni na istem Z
+            GameObject fx = Instantiate(deathExplosionPrefab, spawnPosition, Quaternion.identity);
+            fx.transform.localScale = Vector3.one; // če si imel skalirano na 20, bo zdaj normalno
+        }
+        */
+
+        rb.linearVelocity = Vector2.zero;
+        rb.angularVelocity = 0f;
+        rb.bodyType = RigidbodyType2D.Static;
+
+        GetComponent<Collider2D>().enabled = false;
+
         attempts++;
         PlayerPrefs.SetInt("Attempts", attempts);
         Debug.Log("You Died!");
@@ -132,10 +163,10 @@ public class PlayerController : MonoBehaviour {
 
         int jumps = PlayerPrefs.GetInt("TotalJumps", 0);
         PlayerPrefs.SetInt("TotalJumps", jumps + jumpCount);
-        
+
         int isAutoRetry = PlayerPrefs.GetInt("AutoRetry", 1);
         if (isAutoRetry == 1) {
-            ReloadScene();
+            Invoke(nameof(ReloadScene), 0.35f);
         } else {
             TogglePause();
         }
@@ -147,7 +178,7 @@ public class PlayerController : MonoBehaviour {
             SceneManager.UnloadSceneAsync("LevelPause");
             isPaused = false;
         }
-        
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
@@ -158,7 +189,6 @@ public class PlayerController : MonoBehaviour {
             PlayerPrefs.SetFloat("Time", Time.time - startTime);
             PlayerPrefs.SetInt("Jumps", jumpCount);
             SceneManager.LoadScene("LevelPause", LoadSceneMode.Additive);
-            //Invoke(nameof(SetupPauseSceneUI), 0.1f); // wait a frame
         } else {
             isPaused = false;
             SceneManager.UnloadSceneAsync("LevelPause");
