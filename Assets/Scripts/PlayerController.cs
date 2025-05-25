@@ -8,8 +8,8 @@ public class PlayerController : MonoBehaviour {
     
     private bool isDead = false;
 
-    //[Header("Effects")]
-    //public GameObject deathExplosionPrefab;
+    [Header("Effects")]
+    public GameObject deathExplosionPrefab;
 
     [Header("Attempts Counter")]
     int attempts = 1;
@@ -137,16 +137,15 @@ public class PlayerController : MonoBehaviour {
 
         isDead = true;
 
-        // Zakomentiran efekt smrti:
-        /*
-        if (deathExplosionPrefab != null)
-        {
+        if (deathExplosionPrefab != null) {
             Vector3 spawnPosition = transform.position;
-            spawnPosition.z = 0; // ali -1, če kamera ni na istem Z
             GameObject fx = Instantiate(deathExplosionPrefab, spawnPosition, Quaternion.identity);
-            fx.transform.localScale = Vector3.one; // če si imel skalirano na 20, bo zdaj normalno
+
+            ParticleSystem ps = fx.GetComponent<ParticleSystem>();
+            if (ps != null) {
+                ps.Play();
+            }
         }
-        */
 
         rb.linearVelocity = Vector2.zero;
         rb.angularVelocity = 0f;
@@ -166,7 +165,7 @@ public class PlayerController : MonoBehaviour {
 
         int isAutoRetry = PlayerPrefs.GetInt("AutoRetry", 1);
         if (isAutoRetry == 1) {
-            Invoke(nameof(ReloadScene), 0.35f);
+            Invoke(nameof(ReloadScene), 2f);
         } else {
             TogglePause();
         }
