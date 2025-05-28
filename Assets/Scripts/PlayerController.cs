@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour {
 
     [Header("Effects")]
     public GameObject deathExplosionPrefab;
+    public Animator animator;
+
 
     [Header("Attempts Counter")]
     int attempts = 1;
@@ -51,12 +53,13 @@ public class PlayerController : MonoBehaviour {
 
     void Start() {
         rb = GetComponent<Rigidbody2D>();
+        animator = transform.Find("SpriteHolder").GetComponent<Animator>();
         rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
         totalAttempts = PlayerPrefs.GetInt("TotalAttempts");
 
         attempts = PlayerPrefs.GetInt("Attempts", 1);
         attemptText.text = $"Attempts: {attempts}";
-
+        
         initialX = transform.position.x;
         Time.timeScale = 1f;
         startTime = Time.time;
@@ -81,6 +84,9 @@ public class PlayerController : MonoBehaviour {
         if (isPaused || isDead) return;
 
         isGrounded = rb.IsTouchingLayers(groundLayer);
+        animator.SetBool("IsGrounded", isGrounded);
+        Debug.Log($"IsGrounded: {isGrounded} | Animator State: {animator.GetBool("IsGrounded")}");
+
 
         if (isGrounded && !wasGroundedLastFrame) {
             float currentZ = transform.rotation.eulerAngles.z;
