@@ -3,11 +3,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Collections;
 
 public class PlayerController : MonoBehaviour {
     
     private bool isDead = false;
-
+    public AudioSource buttonClickSound;
     public GameObject player;
 
     [Header("Effects")]
@@ -195,13 +196,20 @@ public class PlayerController : MonoBehaviour {
     }
 
 
-    public void ReloadScene() {
-        if (isPaused) {
-            Time.timeScale = 1f;
-            SceneManager.UnloadSceneAsync("LevelPause");
-            isPaused = false;
-        }
+    public void ReloadScene()
+    {
+        
+        StartCoroutine(ReloadSceneWithDelay());
+    }
 
+    private IEnumerator ReloadSceneWithDelay()
+    {
+        PlayClickSound();
+        yield return new WaitForSecondsRealtime(0.4f);
+
+        Time.timeScale = 1f;
+        isPaused = false;
+        SceneManager.UnloadSceneAsync("LevelPause");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
@@ -219,11 +227,29 @@ public class PlayerController : MonoBehaviour {
     }
 
     public void OnRestartButtonClicked() {
-        ReloadScene();
+        StartCoroutine(ReloadSceneWithDelay());
     }
 
-    public void OnMainMenuButtonClicked() {
+    public void OnMainMenuButtonClicked()
+    {
+        PlayClickSound();
+        StartCoroutine(LoadMainMenuWithDelay());
+    }
+
+    private IEnumerator LoadMainMenuWithDelay()
+    {
+        yield return new WaitForSecondsRealtime(0.4f);
         Time.timeScale = 1f;
         SceneManager.LoadScene("MainMenu");
+    }
+
+    private void PlayClickSound()
+    {
+        Debug.Log("Playing click sound");
+
+        if (buttonClickSound != null)
+            buttonClickSound.Play();
+        else
+            Debug.LogWarning("buttonClickSound is null!");
     }
 }
