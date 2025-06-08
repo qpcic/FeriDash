@@ -163,6 +163,13 @@ public class PlayerController : MonoBehaviour {
         rb.bodyType = RigidbodyType2D.Static;
 
         GetComponent<Collider2D>().enabled = false;
+        Transform spriteHolder = transform.Find("SpriteHolder");
+        if (spriteHolder != null)
+        {
+            SpriteRenderer sr = spriteHolder.GetComponent<SpriteRenderer>();
+            if (sr != null)
+                sr.enabled = false;
+        }
 
         attempts++;
         PlayerPrefs.SetInt("Attempts", attempts);
@@ -174,11 +181,15 @@ public class PlayerController : MonoBehaviour {
         int jumps = PlayerPrefs.GetInt("TotalJumps", 0);
         PlayerPrefs.SetInt("TotalJumps", jumps + jumpCount);
 
-        int isAutoRetry = PlayerPrefs.GetInt("AutoRetry", 1);
-        if (isAutoRetry == 1) {
-            player.SetActive(false); // Šele zdaj ga ugasnemo
-            Invoke(nameof(ReloadScene), 0.5f);
-        } else {
+        if (PlayerPrefs.GetInt("AutoRetry", 1) == 1)
+        {
+            if (player != null)
+                player.SetActive(false); // Šele zdaj ga ugasnemo
+            
+            Invoke(nameof(ReloadScene), 0.55f);
+        }
+        else
+        {
             TogglePause();
         }
     }
