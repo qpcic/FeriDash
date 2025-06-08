@@ -30,12 +30,12 @@ public class LevelSelect : MonoBehaviour
 
     private void LoadLevelOne()
     {
-        SceneManager.LoadScene("SampleScene"); // ali "Level1" če imaš drugo ime
+        SceneManager.LoadScene("SampleScene");
     }
 
     private void LoadLevelTwo()
     {
-        SceneManager.LoadScene("SampleScene"); // ali "Level2"
+        SceneManager.LoadScene("SampleScene2");
     }
 
     private void PlayClickSound()
