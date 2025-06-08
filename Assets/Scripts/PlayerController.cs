@@ -3,10 +3,13 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Collections;
 
 public class PlayerController : MonoBehaviour {
     
     private bool isDead = false;
+    public AudioSource buttonClickSound;
+    public GameObject player;
 
     [Header("Effects")]
     public GameObject deathExplosionPrefab;
@@ -138,9 +141,6 @@ public class PlayerController : MonoBehaviour {
     }
 
     void Die() {
-        if (deathAudioSource != null)
-            deathAudioSource.Play();
-
         isDead = true;
 
         if (deathExplosionPrefab != null) {
@@ -153,11 +153,24 @@ public class PlayerController : MonoBehaviour {
             }
         }
 
+        if (deathAudioSource != null)
+            deathAudioSource.Play(); 
+        
+        if (MusicManager.Instance != null)
+            MusicManager.Instance.GetComponent<AudioSource>().Stop();
+
         rb.linearVelocity = Vector2.zero;
         rb.angularVelocity = 0f;
         rb.bodyType = RigidbodyType2D.Static;
 
         GetComponent<Collider2D>().enabled = false;
+        Transform spriteHolder = transform.Find("SpriteHolder");
+        if (spriteHolder != null)
+        {
+            SpriteRenderer sr = spriteHolder.GetComponent<SpriteRenderer>();
+            if (sr != null)
+                sr.enabled = false;
+        }
 
         attempts++;
         PlayerPrefs.SetInt("Attempts", attempts);
@@ -169,21 +182,34 @@ public class PlayerController : MonoBehaviour {
         int jumps = PlayerPrefs.GetInt("TotalJumps", 0);
         PlayerPrefs.SetInt("TotalJumps", jumps + jumpCount);
 
-        int isAutoRetry = PlayerPrefs.GetInt("AutoRetry", 1);
-        if (isAutoRetry == 1) {
-            Invoke(nameof(ReloadScene), 2f);
-        } else {
+        if (PlayerPrefs.GetInt("AutoRetry", 1) == 1)
+        {
+            if (player != null)
+                player.SetActive(false); // Šele zdaj ga ugasnemo
+            
+            Invoke(nameof(ReloadScene), 0.55f);
+        }
+        else
+        {
             TogglePause();
         }
     }
 
-    public void ReloadScene() {
-        if (isPaused) {
-            Time.timeScale = 1f;
-            SceneManager.UnloadSceneAsync("LevelPause");
-            isPaused = false;
-        }
 
+    public void ReloadScene()
+    {
+        
+        StartCoroutine(ReloadSceneWithDelay());
+    }
+
+    private IEnumerator ReloadSceneWithDelay()
+    {
+        PlayClickSound();
+        yield return new WaitForSecondsRealtime(0.4f);
+
+        Time.timeScale = 1f;
+        isPaused = false;
+        SceneManager.UnloadSceneAsync("LevelPause");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
@@ -201,11 +227,29 @@ public class PlayerController : MonoBehaviour {
     }
 
     public void OnRestartButtonClicked() {
-        ReloadScene();
+        StartCoroutine(ReloadSceneWithDelay());
     }
 
-    public void OnMainMenuButtonClicked() {
+    public void OnMainMenuButtonClicked()
+    {
+        PlayClickSound();
+        StartCoroutine(LoadMainMenuWithDelay());
+    }
+
+    private IEnumerator LoadMainMenuWithDelay()
+    {
+        yield return new WaitForSecondsRealtime(0.4f);
         Time.timeScale = 1f;
         SceneManager.LoadScene("MainMenu");
+    }
+
+    private void PlayClickSound()
+    {
+        Debug.Log("Playing click sound");
+
+        if (buttonClickSound != null)
+            buttonClickSound.Play();
+        else
+            Debug.LogWarning("buttonClickSound is null!");
     }
 }
