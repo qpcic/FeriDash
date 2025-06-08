@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour {
     
     private bool isDead = false;
 
+    public GameObject player;
+
     [Header("Effects")]
     public GameObject deathExplosionPrefab;
 
@@ -132,9 +134,6 @@ public class PlayerController : MonoBehaviour {
     }
 
     void Die() {
-        if (deathAudioSource != null)
-            deathAudioSource.Play();
-
         isDead = true;
 
         if (deathExplosionPrefab != null) {
@@ -146,6 +145,12 @@ public class PlayerController : MonoBehaviour {
                 ps.Play();
             }
         }
+
+        if (deathAudioSource != null)
+            deathAudioSource.Play(); 
+        
+        if (MusicManager.Instance != null)
+            MusicManager.Instance.GetComponent<AudioSource>().Stop();
 
         rb.linearVelocity = Vector2.zero;
         rb.angularVelocity = 0f;
@@ -165,11 +170,13 @@ public class PlayerController : MonoBehaviour {
 
         int isAutoRetry = PlayerPrefs.GetInt("AutoRetry", 1);
         if (isAutoRetry == 1) {
-            Invoke(nameof(ReloadScene), 2f);
+            player.SetActive(false); // Šele zdaj ga ugasnemo
+            Invoke(nameof(ReloadScene), 0.5f);
         } else {
             TogglePause();
         }
     }
+
 
     public void ReloadScene() {
         if (isPaused) {
