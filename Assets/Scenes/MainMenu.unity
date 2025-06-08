@@ -285,6 +285,8 @@ MonoBehaviour:
   levelMusicClips:
   - sceneName: SampleScene
     musicClip: {fileID: 8300000, guid: 049f2f98291512948970283fdaa62cb2, type: 3}
+  - sceneName: SampleScene2
+    musicClip: {fileID: 8300000, guid: ec1f06ed3b12f724599bf334c57b32fe, type: 3}
 --- !u!4 &410483142
 Transform:
   m_ObjectHideFlags: 0

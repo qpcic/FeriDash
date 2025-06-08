@@ -17,7 +17,7 @@ public class LevelSelect : MonoBehaviour
 
     public void PlayLevelTwo()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("SampleScene2");
 
     }
 }
