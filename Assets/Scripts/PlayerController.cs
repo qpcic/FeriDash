@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private float groundCheckRadius = 0.2f;
     [SerializeField] private LayerMask groundLayer;
 
+    
     [Header("UI")]
     public TMP_Text velocityText;
 
