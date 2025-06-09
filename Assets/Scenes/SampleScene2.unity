@@ -3161,7 +3161,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &517265948
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8750,6 +8750,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 169455c3f38d1614db709726e7da7602, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonClickSound: {fileID: 0}
+  player: {fileID: 0}
   deathExplosionPrefab: {fileID: 4415376612712155684, guid: bcc676dbb2bf24cc19b51623dca180f9, type: 3}
   animator: {fileID: 27603780}
   deathAudioSource: {fileID: 1407800811}
@@ -13131,7 +13133,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2003359355
 RectTransform:
   m_ObjectHideFlags: 0
