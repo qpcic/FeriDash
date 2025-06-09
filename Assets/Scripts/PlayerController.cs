@@ -198,7 +198,6 @@ public class PlayerController : MonoBehaviour {
 
     public void ReloadScene()
     {
-        
         StartCoroutine(ReloadSceneWithDelay());
     }
 
@@ -209,7 +208,14 @@ public class PlayerController : MonoBehaviour {
 
         Time.timeScale = 1f;
         isPaused = false;
-        SceneManager.UnloadSceneAsync("LevelPause");
+
+        // ✅ Samo če je scena naložena, jo odstrani
+        Scene pauseScene = SceneManager.GetSceneByName("LevelPause");
+        if (pauseScene.IsValid() && pauseScene.isLoaded)
+        {
+            SceneManager.UnloadSceneAsync("LevelPause");
+        }
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
